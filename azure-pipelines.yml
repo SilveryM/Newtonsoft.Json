@@ -6,6 +6,12 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
+- bash: dotnet tool update -g dotnet-vs
+
+- bash: vs install preview -sku:enterprise --quiet +Microsoft.VisualStudio.Component.ManagedDesktop.Core +Microsoft.NetCore.Component.DevelopmentTools
+
+- bash: echo "##vso[task.prependpath]$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin"
+
 - powershell: |
     dotnet --info
   displayName: 'Dotnet installs'
